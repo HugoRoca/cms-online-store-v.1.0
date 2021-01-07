@@ -51,3 +51,7 @@ body {
   left: calc(50% - 250px);
   top: calc(50% - 250px);
 }
+.box_register {
+  left: calc(50% - 250px);
+  top: calc(50% - 350px);
+}
