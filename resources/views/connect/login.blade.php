@@ -28,6 +28,25 @@
         {!! Form::submit('Sign in', ['class' => 'btn btn-success mtop16']) !!}
         {!! Form::close() !!}
 
+        @if(Session::has('message'))
+            <div class="container">
+                <div class="mtop16 alert alert-{{ Session::get('typeAlert') }}" style="display:none">
+                    {{ Session::get('message') }}
+                    @if($errors->any())
+                        <ul>
+                            @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                    <script>
+                        $('.alert').slideDown();
+                        setTimeout(function(){ $('.alert').slideUp(); }, 10000);
+                    </script>
+                </div>
+            </div>
+        @endif
+
         <div class="footer mtop16">
             <a href="{{ url('/register') }}">Not Registered? Sign Up</a>
             <a href="{{ url('/recover') }}">Forgot Your Password?</a>
