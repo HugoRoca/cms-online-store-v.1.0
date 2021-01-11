@@ -16,35 +16,35 @@
             <span class="input-group-text">
                 <i class="far fa-user"></i>
             </span>
-            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+            {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
         </div>
         <label for="lastName" class="mtop16">Last Name:</label>
         <div class="input-group">
             <span class="input-group-text">
                 <i class="fas fa-user-tag"></i>
             </span>
-            {!! Form::text('lastName', null, ['class' => 'form-control']) !!}
+            {!! Form::text('lastName', null, ['class' => 'form-control', 'required']) !!}
         </div>
         <label for="email" class="mtop16">Email:</label>
         <div class="input-group">
             <span class="input-group-text">
                 <i class="far fa-envelope-open"></i>
             </span>
-            {!! Form::email('email', null, ['class' => 'form-control']) !!}
+            {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
         </div>
         <label for="password" class="mtop16">Password:</label>
         <div class="input-group">
             <span class="input-group-text">
                 <i class="fas fa-lock"></i>
             </span>
-            {!! Form::password('password', ['class' => 'form-control']) !!}
+            {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
         </div>
         <label for="cPassword" class="mtop16">Confirm Password:</label>
         <div class="input-group">
             <span class="input-group-text">
                 <i class="fas fa-lock"></i>
             </span>
-            {!! Form::password('cPassword', ['class' => 'form-control']) !!}
+            {!! Form::password('cPassword', ['class' => 'form-control', 'required']) !!}
         </div>
         {!! Form::submit('Sign in', ['class' => 'btn btn-success mtop16']) !!}
         {!! Form::close() !!}
