@@ -3,20 +3,54 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator, Hash;
+use Validator, Hash, Auth;
 use App\User;
 
 class ConnectController extends Controller
 {
-    public function getLogin() {
+    public function __construct(){
+        $this->middleware('guest')->except(['getLogout']);
+    }
+
+    public function getLogin()
+    {
         return view('connect.login');
     }
 
-    public function getRegister() {
+    public function postLogin(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ];
+
+        $messages = [
+            'email.required' => 'Your email is required.',
+            'email.email' => 'Email format invalid.',
+            'password.required' => 'Please password is required.',
+            'password.min' => 'Password should be at least 8 characters.'
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->with('message', 'A ocurred error')->with('typeAlert', 'danger');
+        } else {
+            if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)) {
+                return redirect('/');
+            } else {
+                return back()->withErrors($validator)->with('message', 'Email or password incorrect')->with('typeAlert', 'danger');
+            }
+        }
+    }
+
+    public function getRegister()
+    {
         return view('connect.register');
     }
 
-    public function postRegister(Request $request) {
+    public function postRegister(Request $request)
+    {
         $rules = [
             'name' => 'required',
             'lastName' => 'required',
@@ -49,9 +83,14 @@ class ConnectController extends Controller
             $user->email = e($request->input('email'));
             $user->password = Hash::make($request->input('password'));
 
-            if ($user->save()){
+            if ($user->save()) {
                 return redirect('/login')->with('message', 'Your username was created, you can now login.')->with('typeAlert', 'success');
             }
         }
+    }
+
+    public function getLogout(){
+        Auth::logout();
+        return redirect('/');
     }
 }
